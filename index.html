@@ -17,15 +17,9 @@
       font-family: "Poppins", sans-serif;
       overflow: hidden;
     }
-    h1 {
+    h1, h2, p {
       color: #ff0055;
-      font-size: 2.5em;
-      animation: fade 2s ease-in-out infinite alternate;
-    }
-    p {
-      color: #333;
-      font-size: 1.2em;
-      max-width: 80%;
+      margin: 10px;
     }
     button {
       background: #ff0055;
@@ -34,7 +28,7 @@
       padding: 12px 24px;
       border-radius: 25px;
       font-size: 1em;
-      margin-top: 20px;
+      margin: 10px;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -42,64 +36,72 @@
       transform: scale(1.1);
       background: #e6004c;
     }
-    @keyframes fade {
-      from { opacity: 0.6; }
-      to { opacity: 1; }
-    }
-
-    .hearts {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
     .heart {
       position: absolute;
       color: #ff0055;
-      font-size: 24px;
-      animation: floatHearts 6s linear infinite;
+      font-size: 22px;
+      animation: float 5s linear infinite;
     }
-
-    @keyframes floatHearts {
+    @keyframes float {
       0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
       50% { opacity: 1; }
       100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
+    .dance {
+      font-size: 50px;
+      animation: bounce 0.5s infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-20px); }
+    }
   </style>
 </head>
 <body>
-  <div class="hearts" id="hearts"></div>
-  <h1>Hey Riya 💖</h1>
-  <p>I just wanted to tell you something special...</p>
-  <button onclick="showProposal()">Click Here 💌</button>
+  <div id="content">
+    <h1>Hey Riya 💖</h1>
+    <p>I just wanted to tell you something special...</p>
+    <button onclick="startProposal()">Click Here 💌</button>
+  </div>
 
   <script>
-    function showProposal() {
-      document.body.innerHTML = `
-        <div class="hearts" id="hearts"></div>
-        <h1>Riya 💞</h1>
-        <p>From the first day we met, everything changed...<br>
-        You became my favorite person. 💖<br><br>
-        So here's what I really want to say...</p>
-        <h2>Will you be mine forever? 💍</h2>
-      `;
-      createHearts();
-    }
-
     function createHearts() {
-      const hearts = document.getElementById('hearts');
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 15; i++) {
         let heart = document.createElement('div');
         heart.classList.add('heart');
+        heart.innerHTML = '❤️';
         heart.style.left = Math.random() * 100 + 'vw';
         heart.style.animationDuration = (4 + Math.random() * 3) + 's';
-        heart.innerHTML = '❤️';
-        hearts.appendChild(heart);
+        document.body.appendChild(heart);
       }
+    }
+
+    function startProposal() {
+      document.getElementById("content").innerHTML = `
+        <h1>Riya 💞</h1>
+        <p>From the day we met, everything changed...<br>
+        You became my favorite person. 💖</p>
+        <h2>Will you be mine forever? 💍</h2>
+        <button onclick="yesClicked()">Yes 💕</button>
+        <button onclick="noClicked()">No 💔</button>
+      `;
+    }
+
+    function noClicked() {
+      document.getElementById("content").innerHTML = `
+        <h1>😢</h1>
+        <p style="color:#333;font-size:1.1em;">"Kabhi kabhi lagta hai tum meri likhi hui adhuri kahani ho..."</p>
+        <button onclick="startProposal()">Will you be mine? 💍</button>
+      `;
+    }
+
+    function yesClicked() {
+      document.getElementById("content").innerHTML = `
+        <h1>YEAHHH!! 💖</h1>
+        <p>Riya, you just made my world the happiest place 😍</p>
+        <div class="dance">🐶💃</div>
+      `;
+      createHearts();
     }
 
     createHearts();
